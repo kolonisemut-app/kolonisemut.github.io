@@ -4,259 +4,302 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pricing - Koloni Semut</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6.7.2 (jsDelivr) -->
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts - Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- SweetAlert2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
     <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
+        body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start; /* Mulai dari atas */
-            padding: 20px; /* Padding untuk perangkat mobile */
-            box-sizing: border-box; /* Memastikan padding tidak mempengaruhi lebar */
-            overflow-y: auto; /* Tambahkan scroll jika konten terlalu panjang */
+            background-color: #000814; /* Biru Navy Lebih Gelap */
+            color: #FFD700; /* Kuning */
         }
-
-        /* Konten Utama */
+        .navbar {
+            background-color: #000814;
+        }
+        .navbar-brand {
+            color: #FFD700 !important;
+            font-weight: 700;
+        }
         .pricing-container {
-            background: rgba(0, 0, 0, 0.7);
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-            width: 100%;
-            max-width: 1200px; /* Lebar maksimum kontainer */
+            padding: 50px 0;
             text-align: center;
-            box-sizing: border-box; /* Memastikan padding tidak mempengaruhi lebar */
         }
-
         .pricing-container h1 {
-            margin-bottom: 1.5rem;
-            color: #ffb700;
-            font-size: 2rem; /* Ukuran font lebih besar */
+            font-weight: 700;
+            margin-bottom: 40px;
         }
-
-        .pricing-container h2 {
-            margin-bottom: 1rem;
-            color: #ffb700;
-            font-size: 1.5rem; /* Ukuran font lebih besar */
-        }
-
-        .pricing-container p {
-            margin-bottom: 2rem;
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        /* Daftar Fitur */
-        .features {
+        .feature-list {
             display: flex;
-            flex-wrap: wrap; /* Fitur akan wrap ke baris baru jika tidak cukup ruang */
-            gap: 1rem; /* Jarak antar fitur */
-            justify-content: center; /* Pusatkan fitur */
-            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 50px;
         }
-
-        .feature {
+        .feature-block {
+            width: 48%;
+            text-align: left;
+        }
+        .feature-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .feature-list ul li {
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
-            gap: 1rem;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            width: calc(50% - 1rem); /* 2 kolom di desktop */
-            box-sizing: border-box; /* Memastikan padding tidak mempengaruhi lebar */
         }
-
-        .feature i {
-            font-size: 1.5rem;
-            color: #ffb700;
-        }
-
-        .feature span {
-            font-size: 1rem;
-            color: white;
-        }
-
-        /* Paket Harga */
-        .pricing-plans {
+        .feature-list ul li i {
+            width: 40px;
+            height: 40px;
             display: flex;
-            flex-wrap: wrap; /* Paket akan wrap ke baris baru jika tidak cukup ruang */
-            gap: 1.5rem; /* Jarak antar paket */
-            justify-content: center; /* Pusatkan paket */
-            margin-top: 2rem;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #FFD700;
+            border-radius: 50%;
+            margin-right: 10px;
+            color: #FFD700;
+            transition: all 0.3s ease;
         }
-
-        .plan {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 1.5rem;
+        .feature-list ul li:hover i {
+            background-color: #FFD700;
+            color: #000814;
+        }
+        .feature-list ul li span {
+            position: relative;
+        }
+        .feature-list ul li span::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: #FFD700;
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+        .feature-list ul li:hover span::after {
+            width: 100%;
+        }
+        .pricing-card {
+            background-color: rgba(255, 215, 0, 0.1);
+            border: 2px solid #FFD700;
             border-radius: 10px;
+            padding: 20px;
+            margin: 10px;
             text-align: center;
-            width: calc(33.33% - 1.5rem); /* 3 kolom di desktop */
-            box-sizing: border-box; /* Memastikan padding tidak mempengaruhi lebar */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
-        .plan h3 {
-            margin-bottom: 1rem;
-            color: #ffb700;
-            font-size: 1.5rem; /* Ukuran font lebih besar */
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(255, 215, 0, 0.2);
         }
-
-        .plan p {
-            margin-bottom: 1rem;
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.8);
+        .pricing-card h3 {
+            font-weight: 700;
+            margin-bottom: 20px;
         }
-
-        .plan ul {
-            list-style: none;
+        .pricing-card .price {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        .pricing-card ul {
+            list-style-type: none;
             padding: 0;
-            margin-bottom: 1.5rem;
+            margin-bottom: 20px;
         }
-
-        .plan ul li {
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.8);
+        .pricing-card ul li {
+            margin-bottom: 10px;
         }
-
-        .plan button {
+        .pricing-card .btn {
+            background-color: #FFD700;
+            color: #000814;
+            font-weight: 500;
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
-            background: #ffb700;
-            color: #1e3c72;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background 0.3s ease;
-            width: 100%; /* Tombol full width */
+            width: 100%;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
-
-        .plan button:hover {
-            background: #e6a200;
+        .pricing-card .btn:hover {
+            background-color: #ffffff;
+            color: #000814;
         }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            body, html {
-                align-items: flex-start; /* Mulai dari atas di mobile */
-                padding: 10px; /* Padding lebih kecil di mobile */
-            }
-
-            .pricing-container {
-                padding: 1rem; /* Padding lebih kecil di mobile */
-            }
-
-            .pricing-container h1 {
-                font-size: 1.8rem; /* Ukuran font lebih kecil di mobile */
-            }
-
-            .pricing-container h2 {
-                font-size: 1.3rem; /* Ukuran font lebih kecil di mobile */
-            }
-
-            .feature {
-                width: 100%; /* 1 kolom di mobile */
-            }
-
-            .plan {
-                width: 100%; /* 1 kolom di mobile */
-            }
+        .footer {
+            background-color: #000814;
+            color: #FFD700;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: 50px;
         }
+        .footer a {
+            color: #FFD700;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+			.btn-custom {
+			background-color: #FFD700; /* Kuning */
+			color: #000814; /* Biru Navy */
+			margin-top:20px;
+			border: 2px solid #FFD700; /* Border kuning */
+			font-weight: 500;
+			transition: background-color 0.3s ease, color 0.3s ease;
+		}
+
+		.btn-custom:hover {
+			background-color: #ffffff; /* Putih saat hover */
+			color: #000814; /* Teks tetap biru navy */
+			border-color: #FFD700; /* Border tetap kuning */
+		}
     </style>
 </head>
 <body>
-    <div class="pricing-container">
-        <h1>Pricing</h1>
-        <p>Pilih paket yang sesuai dengan kebutuhan Anda untuk mengakses fitur Generate AI Image.</p>
-
-        <!-- Daftar Fitur -->
-        <h2>Fitur Unggulan</h2>
-        <div class="features">
-            <div class="feature">
-                <i class="fas fa-image"></i>
-                <span>Generate AI Image dengan kualitas tinggi</span>
-            </div>
-            <div class="feature">
-                <i class="fas fa-cube"></i>
-                <span>Banyak pilihan model (Dall-E 3, Leonardo, Meta, Midjourney, Stable Diffusion, dst..</span>
-            </div>
-            <div class="feature">
-                <i class="fas fa-palette"></i>
-                <span>Kustomisasi gaya dan tema gambar</span>
-            </div>
-            <div class="feature">
-                <i class="fas fa-brain"></i>
-                <span>Dukungan AI canggih untuk hasil terbaik</span>
-            </div>
-            <div class="feature">
-                <i class="fas fa-download"></i>
-                <span>Download gambar dalam berbagai format</span>
-            </div>
-            <div class="feature">
-                <i class="fas fa-cloud-upload-alt"></i>
-                <span>Simpan gambar ke cloud secara otomatis</span>
-            </div>
-            <div class="feature">
-                <i class="fas fa-users"></i>
-                <span>Kolaborasi dengan tim secara real-time</span>
-            </div>
-            <div class="feature">
-                <i class="fas fa-shield-alt"></i>
-                <span>Keamanan data terjamin</span>
-            </div>
-            <div class="feature">
-                <i class="fas fa-magic"></i>
-                <span>Efek khusus dan filter AI</span>
-            </div>
-            <div class="feature">
-                <i class="fas fa-history"></i>
-                <span>Riwayat generate gambar</span>
-            </div>
-            <div class="feature">
-                <i class="fas fa-headset"></i>
-                <span>Dukungan pelanggan 24/7</span>
-            </div>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="logo.png" alt="Koloni Semut" width="30" height="30" class="d-inline-block align-text-top">
+                Koloni Semut
+            </a>
         </div>
+    </nav>
 
-        <!-- Paket Harga -->
-        <h2>Pilih Paket</h2>
-        <div class="pricing-plans">
-            <div class="plan">
-                <h3>Basic</h3>
-                <p>Rp 100.000/bulan</p>
-                <ul>
-                    <li>10 Generate AI Image/bulan</li>
-                    <li>Download gambar</li>
-                    <li>Dukungan email</li>
-                </ul>
-                <button onclick="window.location.href='kontak-form.html'">Pilih Paket</button>
+    <!-- Pricing Section -->
+    <div class="pricing-container">
+        <div class="container">
+			<a href="index.html" class="btn btn-custom mb-4">
+			<i class="fas fa-home"></i> Kembali ke Beranda
+		</a>
+            <h1>Pricing Plan</h1>
+
+            <!-- Daftar Fitur -->
+            <div class="feature-list">
+                <!-- Block 1 -->
+                <div class="feature-block">
+                    <ul>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span>Generate gambar berkualitas tinggi</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-palette"></i>
+                            <span>Dukungan untuk berbagai gaya gambar</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-rocket"></i>
+                            <span>Proses generasi cepat</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-image"></i>
+                            <span>Ekspor gambar dalam resolusi tinggi</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-cogs"></i>
+                            <span>Custom prompt untuk hasil yang lebih personal</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Block 2 -->
+                <div class="feature-block">
+                    <ul>
+                        <li>
+                            <i class="fas fa-layer-group"></i>
+                            <span>Dukungan untuk batch processing</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-share-alt"></i>
+                            <span>Integrasi dengan platform lain</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-cloud"></i>
+                            <span>Penyimpanan cloud untuk hasil gambar</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-headset"></i>
+                            <span>Dukungan pelanggan 24/7</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-sync-alt"></i>
+                            <span>Update fitur berkala</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div class="plan">
-                <h3>Pro</h3>
-                <p>Rp 300.000/bulan</p>
-                <ul>
-                    <li>50 Generate AI Image/bulan</li>
-                    <li>Kustomisasi gaya gambar</li>
-                    <li>Simpan ke cloud</li>
-                </ul>
-                <button onclick="window.location.href='kontak-form.html'">Pilih Paket</button>
-            </div>
-            <div class="plan">
-                <h3>Enterprise</h3>
-                <p>Rp 500.000/bulan</p>
-                <ul>
-                    <li>Generate AI Image tanpa batas</li>
-                    <li>Kolaborasi tim</li>
-                    <li>Dukungan prioritas</li>
-                </ul>
-                <button onclick="window.location.href='kontak-form.html'">Pilih Paket</button>
+
+            <!-- Paket Pricing -->
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="pricing-card">
+                        <h3>Basic</h3>
+                        <div class="price">Rp 100.000/bulan</div>
+                        <ul>
+                            <li><i class="fas fa-check"></i> 10 Generate/bulan</li>
+                            <li><i class="fas fa-image"></i> Resolusi Standar</li>
+                            <li><i class="fas fa-envelope"></i> Dukungan Email</li>
+                        </ul>
+                        <button class="btn" onclick="redirectToContactForm()">Pilih Paket</button>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="pricing-card">
+                        <h3>Pro</h3>
+                        <div class="price">Rp 300.000/bulan</div>
+                        <ul>
+                            <li><i class="fas fa-check"></i> 50 Generate/bulan</li>
+                            <li><i class="fas fa-image"></i> Resolusi Tinggi</li>
+                            <li><i class="fas fa-headset"></i> Dukungan Prioritas</li>
+                        </ul>
+                        <button class="btn" onclick="redirectToContactForm()">Pilih Paket</button>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="pricing-card">
+                        <h3>Enterprise</h3>
+                        <div class="price">Rp 500.000/bulan</div>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Generate Unlimited</li>
+                            <li><i class="fas fa-image"></i> Resolusi 4K</li>
+                            <li><i class="fas fa-headset"></i> Dukungan 24/7</li>
+                        </ul>
+                        <button class="btn" onclick="redirectToContactForm()">Pilih Paket</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; <span id="year"></span> Koloni Semut. All Rights Reserved.</p>
+            <div class="social-links">
+                <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // Dynamic Year in Footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Redirect ke Contact Form
+        function redirectToContactForm() {
+            window.location.href = 'contact.html';
+        }
+    </script>
 </body>
 </html>
