@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing - Koloni Semut</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Mulai dari atas */
+            padding: 20px; /* Padding untuk perangkat mobile */
+            box-sizing: border-box; /* Memastikan padding tidak mempengaruhi lebar */
+            overflow-y: auto; /* Tambahkan scroll jika konten terlalu panjang */
+        }
+
+        /* Konten Utama */
+        .pricing-container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 1200px; /* Lebar maksimum kontainer */
+            text-align: center;
+            box-sizing: border-box; /* Memastikan padding tidak mempengaruhi lebar */
+        }
+
+        .pricing-container h1 {
+            margin-bottom: 1.5rem;
+            color: #ffb700;
+            font-size: 2rem; /* Ukuran font lebih besar */
+        }
+
+        .pricing-container h2 {
+            margin-bottom: 1rem;
+            color: #ffb700;
+            font-size: 1.5rem; /* Ukuran font lebih besar */
+        }
+
+        .pricing-container p {
+            margin-bottom: 2rem;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Daftar Fitur */
+        .features {
+            display: flex;
+            flex-wrap: wrap; /* Fitur akan wrap ke baris baru jika tidak cukup ruang */
+            gap: 1rem; /* Jarak antar fitur */
+            justify-content: center; /* Pusatkan fitur */
+            margin-bottom: 2rem;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            width: calc(50% - 1rem); /* 2 kolom di desktop */
+            box-sizing: border-box; /* Memastikan padding tidak mempengaruhi lebar */
+        }
+
+        .feature i {
+            font-size: 1.5rem;
+            color: #ffb700;
+        }
+
+        .feature span {
+            font-size: 1rem;
+            color: white;
+        }
+
+        /* Paket Harga */
+        .pricing-plans {
+            display: flex;
+            flex-wrap: wrap; /* Paket akan wrap ke baris baru jika tidak cukup ruang */
+            gap: 1.5rem; /* Jarak antar paket */
+            justify-content: center; /* Pusatkan paket */
+            margin-top: 2rem;
+        }
+
+        .plan {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            width: calc(33.33% - 1.5rem); /* 3 kolom di desktop */
+            box-sizing: border-box; /* Memastikan padding tidak mempengaruhi lebar */
+        }
+
+        .plan h3 {
+            margin-bottom: 1rem;
+            color: #ffb700;
+            font-size: 1.5rem; /* Ukuran font lebih besar */
+        }
+
+        .plan p {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .plan ul {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 1.5rem;
+        }
+
+        .plan ul li {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .plan button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background: #ffb700;
+            color: #1e3c72;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            width: 100%; /* Tombol full width */
+        }
+
+        .plan button:hover {
+            background: #e6a200;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body, html {
+                align-items: flex-start; /* Mulai dari atas di mobile */
+                padding: 10px; /* Padding lebih kecil di mobile */
+            }
+
+            .pricing-container {
+                padding: 1rem; /* Padding lebih kecil di mobile */
+            }
+
+            .pricing-container h1 {
+                font-size: 1.8rem; /* Ukuran font lebih kecil di mobile */
+            }
+
+            .pricing-container h2 {
+                font-size: 1.3rem; /* Ukuran font lebih kecil di mobile */
+            }
+
+            .feature {
+                width: 100%; /* 1 kolom di mobile */
+            }
+
+            .plan {
+                width: 100%; /* 1 kolom di mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="pricing-container">
+        <h1>Pricing</h1>
+        <p>Pilih paket yang sesuai dengan kebutuhan Anda untuk mengakses fitur Generate AI Image.</p>
+
+        <!-- Daftar Fitur -->
+        <h2>Fitur Unggulan</h2>
+        <div class="features">
+            <div class="feature">
+                <i class="fas fa-image"></i>
+                <span>Generate AI Image dengan kualitas tinggi</span>
+            </div>
+            	            <div class="feature">
+                <i class="fas fa-cube"></i>
+                <span>Banyak pilihan model (Dall-E 3, Leonardo, Meta, Midjourney, Stable Diffusion, dst..</span>
+            </div>
+            <div class="feature">
+                <i class="fas fa-palette"></i>
+                <span>Kustomisasi gaya dan tema gambar</span>
+            </div>
+            <div class="feature">
+                <i class="fas fa-brain"></i>
+                <span>Dukungan AI canggih untuk hasil terbaik</span>
+            </div>
+            <div class="feature">
+                <i class="fas fa-download"></i>
+                <span>Download gambar dalam berbagai format</span>
+            </div>
+            <div class="feature">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <span>Simpan gambar ke cloud secara otomatis</span>
+            </div>
+            <div class="feature">
+                <i class="fas fa-users"></i>
+                <span>Kolaborasi dengan tim secara real-time</span>
+            </div>
+            <div class="feature">
+                <i class="fas fa-shield-alt"></i>
+                <span>Keamanan data terjamin</span>
+            </div>
+            <div class="feature">
+                <i class="fas fa-magic"></i>
+                <span>Efek khusus dan filter AI</span>
+            </div>
+            <div class="feature">
+                <i class="fas fa-history"></i>
+                <span>Riwayat generate gambar</span>
+            </div>
+            <div class="feature">
+                <i class="fas fa-headset"></i>
+                <span>Dukungan pelanggan 24/7</span>
+            </div>
+        </div>
+
+        <!-- Paket Harga -->
+        <h2>Pilih Paket</h2>
+        <div class="pricing-plans">
+            <div class="plan">
+                <h3>Basic</h3>
+                <p>Rp 100.000/bulan</p>
+                <ul>
+                    <li>10 Generate AI Image/bulan</li>
+                    <li>Download gambar</li>
+                    <li>Dukungan email</li>
+                </ul>
+                <button>Pilih Paket</button>
+            </div>
+            <div class="plan">
+                <h3>Pro</h3>
+                <p>Rp 300.000/bulan</p>
+                <ul>
+                    <li>50 Generate AI Image/bulan</li>
+                    <li>Kustomisasi gaya gambar</li>
+                    <li>Simpan ke cloud</li>
+                </ul>
+                <button>Pilih Paket</button>
+            </div>
+            <div class="plan">
+                <h3>Enterprise</h3>
+                <p>Rp 500.000/bulan</p>
+                <ul>
+                    <li>Generate AI Image tanpa batas</li>
+                    <li>Kolaborasi tim</li>
+                    <li>Dukungan prioritas</li>
+                </ul>
+                <button>Pilih Paket</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

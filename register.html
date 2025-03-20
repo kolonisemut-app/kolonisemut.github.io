@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Koloni Semut</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- SweetAlert CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        /* Konten Utama (Form Register) */
+        .register-container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 2rem;
+            text-align:center;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 350px; /* Lebar maksimum kontainer */
+            text-align: center;
+        }
+
+        .logo {
+            width: 100px; /* Ukuran logo */
+            margin-bottom: 1.5rem;
+        }
+
+        .register-container h2 {
+            margin-bottom: 1.5rem;
+            color: #ffb700;
+        }
+
+        .input-group {
+            position: relative;
+            margin: 10px 0;
+        }
+
+        .input-group input {
+            width: calc(100% - 40px); /* Sesuaikan lebar input */
+            padding: 10px 40px 10px 10px;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        .input-group i {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #1e3c72;
+        }
+
+        .register-container button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            text-align: center;
+            border: none;
+            border-radius: 5px;
+            background: #ffb700;
+            color: #1e3c72;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .register-container button:hover {
+            background: #e6a200;
+        }
+
+        .register-container p {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .register-container a {
+            color: #ffb700;
+            text-decoration: none;
+        }
+
+        .register-container a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <!-- Logo -->
+        <img src="logo.png" alt="Logo Koloni Semut" class="logo">
+        <h2>Register</h2>
+        <form id="register-form">
+            <div class="input-group">
+                <input type="text" id="name" placeholder="Nama Lengkap" required>
+            </div>
+            <div class="input-group">
+                <input type="email" id="email" placeholder="Email" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" placeholder="Password" required>
+                <i class="fas fa-eye" id="toggle-password"></i>
+            </div>
+            <button type="submit">Daftar</button>
+        </form>
+        <p>Sudah punya akun? <a href="login.html">Login di sini</a></p>
+        <p>Kembali ke &rarr; <a href="index.html">Beranda</a></p>
+    </div>
+
+    <!-- SweetAlert JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // Show/Hide Password
+        const togglePassword = document.getElementById('toggle-password');
+        const passwordInput = document.getElementById('password');
+
+        togglePassword.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            togglePassword.classList.toggle('fa-eye-slash');
+        });
+
+        // Handle Form Register dengan SweetAlert
+        const registerForm = document.getElementById('register-form');
+        registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Simulasi registrasi sederhana
+            Swal.fire({
+                title: 'Registrasi Berhasil!',
+                text: `Nama: ${name}\nEmail: ${email}`,
+                icon: 'success',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                window.location.href = "login.html"; // Redirect ke halaman login
+            });
+        });
+    </script>
+</body>
+</html>
