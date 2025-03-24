@@ -346,10 +346,12 @@
     <!-- Main Content -->
     <div class="main-content">
         <div class="container">
-            <!-- Balance Section -->
-            <div class="balance">
-                <i class="fas fa-wallet"></i> Total Saldo: <span id="totalBalance">Rp. 12.000.000</span>
-            </div>
+<!-- Balance Section -->
+<div class="balance">
+    <i class="fas fa-wallet"></i> Total Saldo: <span id="totalBalance">Rp. 12.000.000</span>
+    <br>
+    <i class="fas fa-dollar-sign"></i> Total Saldo (USD): <span id="totalBalanceUSD">$0.00</span>
+</div>
 
             <!-- Online Status -->
             <div class="online-status">
@@ -545,449 +547,468 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Toastr JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-<script>
-    // Data awal untuk 4 dataset dengan inisial tiga huruf
-    let data = {
-        labels: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00'], // Label sumbu X dalam format jam
-        datasets: [
-            {
-                label: 'Penjualan A', // Mengganti label dataset
-                data: Array.from({ length: 7 }, () => Math.floor(Math.random() * 100)),
-                fill: false,
-                borderColor: 'rgb(75, 192, 192)',
-                tension: 0.1
-            },
-            {
-                label: 'Penjualan B', // Mengganti label dataset
-                data: Array.from({ length: 7 }, () => Math.floor(Math.random() * 100)),
-                fill: false,
-                borderColor: 'rgb(255, 99, 132)',
-                tension: 0.1
-            },
-            {
-                label: 'Penjualan C', // Mengganti label dataset
-                data: Array.from({ length: 7 }, () => Math.floor(Math.random() * 100)),
-                fill: false,
-                borderColor: 'rgb(54, 162, 235)',
-                tension: 0.1
-            },
-            {
-                label: 'Penjualan D', // Mengganti label dataset
-                data: Array.from({ length: 7 }, () => Math.floor(Math.random() * 100)),
-                fill: false,
-                borderColor: 'rgb(255, 206, 86)',
-                tension: 0.1
-            }
-        ]
-    };
+    <script>
+// Kurs USD ke IDR (contoh: 1 USD = 14,000 IDR)
+const exchangeRate = 14000;
 
-    // Konfigurasi chart
-    const config = {
-        type: 'line',
-        data: data,
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        autoSkip: true,
-                        maxTicksLimit: 5, // Batasi jumlah label sumbu Y
-                        font: {
-                            size: 12, // Ukuran font sumbu Y
-                        }
-                    }
-                },
-                x: {
-                    ticks: {
-                        font: {
-                            size: 12, // Ukuran font sumbu X
-                        }
-                    }
-                }
-            },
-            plugins: {
-                legend: {
-                    labels: {
-                        font: {
-                            size: 12, // Ukuran font legenda
-                        }
+// Fungsi untuk mengkonversi Rupiah ke Dolar AS
+function convertToUSD(amountInIDR) {
+    return (amountInIDR / exchangeRate).toFixed(2);
+}
+
+// Fungsi untuk mengupdate saldo dalam dolar AS
+function updateUSDBalance() {
+    const usdBalance = convertToUSD(totalBalance);
+    document.getElementById('totalBalanceUSD').textContent = `$${usdBalance}`;
+}
+
+// Data awal untuk 4 dataset dengan inisial tiga huruf
+let data = {
+    labels: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00'], // Label sumbu X dalam format jam
+    datasets: [
+        {
+            label: 'Penjualan A', // Mengganti label dataset
+            data: Array.from({ length: 7 }, () => Math.floor(Math.random() * 100)),
+            fill: false,
+            borderColor: 'rgb(75, 192, 192)',
+            tension: 0.1
+        },
+        {
+            label: 'Penjualan B', // Mengganti label dataset
+            data: Array.from({ length: 7 }, () => Math.floor(Math.random() * 100)),
+            fill: false,
+            borderColor: 'rgb(255, 99, 132)',
+            tension: 0.1
+        },
+        {
+            label: 'Penjualan C', // Mengganti label dataset
+            data: Array.from({ length: 7 }, () => Math.floor(Math.random() * 100)),
+            fill: false,
+            borderColor: 'rgb(54, 162, 235)',
+            tension: 0.1
+        },
+        {
+            label: 'Penjualan D', // Mengganti label dataset
+            data: Array.from({ length: 7 }, () => Math.floor(Math.random() * 100)),
+            fill: false,
+            borderColor: 'rgb(255, 206, 86)',
+            tension: 0.1
+        }
+    ]
+};
+
+// Konfigurasi chart
+const config = {
+    type: 'line',
+    data: data,
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    autoSkip: true,
+                    maxTicksLimit: 5, // Batasi jumlah label sumbu Y
+                    font: {
+                        size: 12, // Ukuran font sumbu Y
                     }
                 }
+            },
+            x: {
+                ticks: {
+                    font: {
+                        size: 12, // Ukuran font sumbu X
+                    }
+                }
+            }
+        },
+        plugins: {
+            legend: {
+                labels: {
+                    font: {
+                        size: 12, // Ukuran font legenda
+                    }
+                }
             }
         }
-    };
+    }
+};
 
-    // Inisialisasi chart
-    const myChart = new Chart(
-        document.getElementById('myChart'),
-        config
-    );
+// Inisialisasi chart
+const myChart = new Chart(
+    document.getElementById('myChart'),
+    config
+);
 
-    // Fungsi untuk memformat angka ke dalam format Rupiah
-    function formatRupiah(amount) {
-        return `Rp. ${amount.toLocaleString('id-ID')}`;
+// Fungsi untuk memformat angka ke dalam format Rupiah
+function formatRupiah(amount) {
+    return `Rp. ${amount.toLocaleString('id-ID')}`;
+}
+
+// Total saldo awal
+let totalBalance = 12000000; // Saldo awal Rp. 12.000.000
+const maxBalance = 999999999; // Saldo maksimal Rp. 999.999.999
+const minBalance = 0; // Saldo minimal Rp. 0
+
+// Persentase awal
+let tabunganPercentage = 25.00;
+let investasiPercentage = 37.00;
+let donasiPercentage = 31.00;
+let transaksiPercentage = 64.00;
+
+// Data anggota
+const totalJoinedMembers = 4846000; // Total anggota yang bergabung
+let joinedMembers = 0; // Anggota yang bergabung (ditampilkan)
+let leftMembers = 0; // Anggota yang keluar
+let currentMembers = 236331; // Jumlah anggota yang ditampilkan di website
+
+// Data riwayat aktivitas
+let activityHistory = [];
+
+// Fungsi untuk memformat persentase dengan 2 digit di belakang koma
+function formatPercentage(value) {
+    return `${value.toFixed(2)}%`;
+}
+
+// Fungsi untuk mengupdate persentase
+function updatePercentages() {
+    document.getElementById('tabunganPercentage').textContent = formatPercentage(tabunganPercentage);
+    document.getElementById('investasiPercentage').textContent = formatPercentage(investasiPercentage);
+    document.getElementById('donasiPercentage').textContent = formatPercentage(donasiPercentage);
+    document.getElementById('transaksiPercentage').textContent = formatPercentage(transaksiPercentage);
+}
+
+// Fungsi untuk menyimpan data ke localStorage
+function saveDataToLocalStorage() {
+    localStorage.setItem('totalBalance', totalBalance);
+    localStorage.setItem('tabunganPercentage', tabunganPercentage);
+    localStorage.setItem('investasiPercentage', investasiPercentage);
+    localStorage.setItem('donasiPercentage', donasiPercentage);
+    localStorage.setItem('transaksiPercentage', transaksiPercentage);
+    localStorage.setItem('joinedMembers', joinedMembers);
+    localStorage.setItem('leftMembers', leftMembers);
+    localStorage.setItem('currentMembers', currentMembers);
+    localStorage.setItem('activityHistory', JSON.stringify(activityHistory));
+
+    // Simpan data chart
+    const chartData = myChart.data.datasets.map(dataset => dataset.data);
+    localStorage.setItem('chartData', JSON.stringify(chartData));
+}
+
+// Fungsi untuk memuat data dari localStorage
+function loadDataFromLocalStorage() {
+    const savedBalance = localStorage.getItem('totalBalance');
+    const savedTabungan = localStorage.getItem('tabunganPercentage');
+    const savedInvestasi = localStorage.getItem('investasiPercentage');
+    const savedDonasi = localStorage.getItem('donasiPercentage');
+    const savedTransaksi = localStorage.getItem('transaksiPercentage');
+    const savedJoined = localStorage.getItem('joinedMembers');
+    const savedLeft = localStorage.getItem('leftMembers');
+    const savedCurrent = localStorage.getItem('currentMembers');
+    const savedChartData = localStorage.getItem('chartData');
+    const savedActivityHistory = localStorage.getItem('activityHistory');
+
+    // Jika localStorage kosong, kembalikan ke setelan awal
+    if (!savedBalance) {
+        totalBalance = 12000000; // Saldo awal Rp. 12.000.000
+        tabunganPercentage = 25.00;
+        investasiPercentage = 37.00;
+        donasiPercentage = 31.00;
+        transaksiPercentage = 64.00;
+        joinedMembers = 0;
+        leftMembers = 0;
+        currentMembers = 236331; // Jumlah anggota yang ditampilkan di website
+        activityHistory = [];
+    } else {
+        if (savedBalance) totalBalance = parseFloat(savedBalance);
+        if (savedTabungan) tabunganPercentage = parseFloat(savedTabungan);
+        if (savedInvestasi) investasiPercentage = parseFloat(savedInvestasi);
+        if (savedDonasi) donasiPercentage = parseFloat(savedDonasi);
+        if (savedTransaksi) transaksiPercentage = parseFloat(savedTransaksi);
+        if (savedJoined) joinedMembers = parseInt(savedJoined);
+        if (savedLeft) leftMembers = parseInt(savedLeft);
+        if (savedCurrent) currentMembers = parseInt(savedCurrent);
+        if (savedActivityHistory) activityHistory = JSON.parse(savedActivityHistory);
     }
 
-    // Total saldo awal
-    let totalBalance = 12000000; // Saldo awal Rp. 12.000.000
-    const maxBalance = 999999999; // Saldo maksimal Rp. 999.999.999
-    const minBalance = 0; // Saldo minimal Rp. 0
+    // Update tampilan dengan data yang dimuat
+    document.getElementById('totalBalance').textContent = formatRupiah(totalBalance);
+    document.getElementById('joinedMembers').textContent = joinedMembers;
+    document.getElementById('leftMembers').textContent = leftMembers;
+    document.getElementById('currentMembers').textContent = currentMembers.toLocaleString('id-ID');
+    updatePercentages();
+    updateUSDBalance(); // Update saldo dolar AS
 
-    // Persentase awal
-    let tabunganPercentage = 25.00;
-    let investasiPercentage = 37.00;
-    let donasiPercentage = 31.00;
-    let transaksiPercentage = 64.00;
-
-    // Data anggota
-    const totalJoinedMembers = 4846000; // Total anggota yang bergabung
-    let joinedMembers = 0; // Anggota yang bergabung (ditampilkan)
-    let leftMembers = 0; // Anggota yang keluar
-    let currentMembers = 236331; // Jumlah anggota yang ditampilkan di website
-
-    // Data riwayat aktivitas
-    let activityHistory = [];
-
-    // Fungsi untuk memformat persentase dengan 2 digit di belakang koma
-    function formatPercentage(value) {
-        return `${value.toFixed(2)}%`;
-    }
-
-    // Fungsi untuk mengupdate persentase
-    function updatePercentages() {
-        document.getElementById('tabunganPercentage').textContent = formatPercentage(tabunganPercentage);
-        document.getElementById('investasiPercentage').textContent = formatPercentage(investasiPercentage);
-        document.getElementById('donasiPercentage').textContent = formatPercentage(donasiPercentage);
-        document.getElementById('transaksiPercentage').textContent = formatPercentage(transaksiPercentage);
-    }
-
-    // Fungsi untuk menyimpan data ke localStorage
-    function saveDataToLocalStorage() {
-        localStorage.setItem('totalBalance', totalBalance);
-        localStorage.setItem('tabunganPercentage', tabunganPercentage);
-        localStorage.setItem('investasiPercentage', investasiPercentage);
-        localStorage.setItem('donasiPercentage', donasiPercentage);
-        localStorage.setItem('transaksiPercentage', transaksiPercentage);
-        localStorage.setItem('joinedMembers', joinedMembers);
-        localStorage.setItem('leftMembers', leftMembers);
-        localStorage.setItem('currentMembers', currentMembers);
-        localStorage.setItem('activityHistory', JSON.stringify(activityHistory));
-
-        // Simpan data chart
-        const chartData = myChart.data.datasets.map(dataset => dataset.data);
-        localStorage.setItem('chartData', JSON.stringify(chartData));
-    }
-
-    // Fungsi untuk memuat data dari localStorage
-    function loadDataFromLocalStorage() {
-        const savedBalance = localStorage.getItem('totalBalance');
-        const savedTabungan = localStorage.getItem('tabunganPercentage');
-        const savedInvestasi = localStorage.getItem('investasiPercentage');
-        const savedDonasi = localStorage.getItem('donasiPercentage');
-        const savedTransaksi = localStorage.getItem('transaksiPercentage');
-        const savedJoined = localStorage.getItem('joinedMembers');
-        const savedLeft = localStorage.getItem('leftMembers');
-        const savedCurrent = localStorage.getItem('currentMembers');
-        const savedChartData = localStorage.getItem('chartData');
-        const savedActivityHistory = localStorage.getItem('activityHistory');
-
-        // Jika localStorage kosong, kembalikan ke setelan awal
-        if (!savedBalance) {
-            totalBalance = 12000000; // Saldo awal Rp. 12.000.000
-            tabunganPercentage = 25.00;
-            investasiPercentage = 37.00;
-            donasiPercentage = 31.00;
-            transaksiPercentage = 64.00;
-            joinedMembers = 0;
-            leftMembers = 0;
-            currentMembers = 236331; // Jumlah anggota yang ditampilkan di website
-            activityHistory = [];
-        } else {
-            if (savedBalance) totalBalance = parseFloat(savedBalance);
-            if (savedTabungan) tabunganPercentage = parseFloat(savedTabungan);
-            if (savedInvestasi) investasiPercentage = parseFloat(savedInvestasi);
-            if (savedDonasi) donasiPercentage = parseFloat(savedDonasi);
-            if (savedTransaksi) transaksiPercentage = parseFloat(savedTransaksi);
-            if (savedJoined) joinedMembers = parseInt(savedJoined);
-            if (savedLeft) leftMembers = parseInt(savedLeft);
-            if (savedCurrent) currentMembers = parseInt(savedCurrent);
-            if (savedActivityHistory) activityHistory = JSON.parse(savedActivityHistory);
-        }
-
-        // Update tampilan dengan data yang dimuat
-        document.getElementById('totalBalance').textContent = formatRupiah(totalBalance);
-        document.getElementById('joinedMembers').textContent = joinedMembers;
-        document.getElementById('leftMembers').textContent = leftMembers;
-        document.getElementById('currentMembers').textContent = currentMembers.toLocaleString('id-ID');
-        updatePercentages();
-
-        // Muat data chart
-        if (savedChartData) {
-            const chartData = JSON.parse(savedChartData);
-            myChart.data.datasets.forEach((dataset, index) => {
-                dataset.data = chartData[index];
-            });
-            myChart.update();
-        } else {
-            // Jika tidak ada data chart, inisialisasi dengan data acak
-            myChart.data.datasets.forEach(dataset => {
-                dataset.data = Array.from({ length: data.labels.length }, () => Math.floor(Math.random() * 100));
-            });
-            myChart.update();
-        }
-
-        // Update tabel riwayat
-        updateActivityHistoryTable();
-    }
-
-    // Fungsi untuk menambahkan aktivitas ke riwayat
-    function addActivityToHistory(activity) {
-        const timestamp = new Date().toLocaleString(); // Tambahkan timestamp
-        activityHistory.unshift({ timestamp, activity }); // Tambahkan ke awal array
-        if (activityHistory.length > 10) {
-            activityHistory.pop(); // Hapus aktivitas terlama jika lebih dari 10
-        }
-        saveDataToLocalStorage(); // Simpan ke localStorage
-        updateActivityHistoryTable(); // Update tabel riwayat
-    }
-
-    // Fungsi untuk mengupdate tabel riwayat
-    function updateActivityHistoryTable() {
-        const historyTableBody = document.getElementById('historyTableBody');
-        historyTableBody.innerHTML = ''; // Kosongkan tabel
-
-        activityHistory.forEach((entry, index) => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${index + 1}</td>
-                <td>${entry.timestamp}</td>
-                <td>${entry.activity}</td>
-            `;
-            historyTableBody.appendChild(row);
+    // Muat data chart
+    if (savedChartData) {
+        const chartData = JSON.parse(savedChartData);
+        myChart.data.datasets.forEach((dataset, index) => {
+            dataset.data = chartData[index];
         });
-    }
-
-    // Fungsi untuk menampilkan progress bar dengan teks deskripsi dan persentase
-    function showProgressBar(description, percentage) {
-        const progressBarContainer = document.getElementById('progressBarContainer');
-        const progressDescription = document.getElementById('progressDescription');
-        const progressPercentage = document.getElementById('progressPercentage');
-        const progressBar = document.getElementById('progressBar');
-
-        progressDescription.textContent = description;
-        progressPercentage.textContent = `${percentage}%`;
-        progressBarContainer.classList.add('visible'); // Tampilkan progress bar dengan efek fade-in
-        progressBar.style.width = `${percentage}%`; // Mulai animasi progress bar
-    }
-
-    // Fungsi untuk menyembunyikan progress bar
-    function hideProgressBar() {
-        const progressBarContainer = document.getElementById('progressBarContainer');
-        const progressBar = document.getElementById('progressBar');
-
-        progressBarContainer.classList.remove('visible'); // Sembunyikan progress bar dengan efek fade-out
-        progressBar.style.width = '0'; // Reset progress bar
-    }
-
-    // Fungsi untuk simulasi proses loading dengan progress bar
-    function simulateLoading() {
-        let progress = 0;
-        const interval = setInterval(() => {
-            progress += 10; // Naikkan progress setiap 500ms
-            showProgressBar('Memuat Data...', progress);
-
-            if (progress >= 100) {
-                clearInterval(interval);
-                setTimeout(() => {
-                    hideProgressBar();
-                    updateChartAndBalance(); // Lanjutkan dengan update chart dan saldo
-                }, 500); // Tunggu 500ms sebelum menyembunyikan progress bar
-            }
-        }, 500); // Update progress setiap 500ms
-    }
-
-    // Update chart dan saldo dengan progress bar
-    function updateChartAndBalanceWithProgress() {
-        simulateLoading();
-    }
-
-    // Fungsi untuk mengupdate data chart dan saldo
-    function updateChartAndBalance() {
-        // Generate data acak baru untuk setiap dataset
+        myChart.update();
+    } else {
+        // Jika tidak ada data chart, inisialisasi dengan data acak
         myChart.data.datasets.forEach(dataset => {
             dataset.data = Array.from({ length: data.labels.length }, () => Math.floor(Math.random() * 100));
         });
-
-        // Update chart
         myChart.update();
-
-        // Simulasi penambahan atau pengurangan saldo secara acak
-        const randomChange = Math.floor(Math.random() * 1000000) * (Math.random() > 0.5 ? 1 : -1); // Acak antara -1.000.000 hingga +1.000.000
-        totalBalance += randomChange;
-
-        // Pastikan saldo tidak melebihi batas maksimal atau minimal
-        if (totalBalance > maxBalance) {
-            totalBalance = maxBalance;
-            toastr.info('Saldo telah mencapai batas maksimal!', 'Info', { timeOut: 2000 });
-        } else if (totalBalance < minBalance) {
-            totalBalance = minBalance;
-            toastr.warning('Saldo telah mencapai batas minimal!', 'Peringatan', { timeOut: 2000 });
-        }
-
-        // Update tampilan saldo
-        document.getElementById('totalBalance').textContent = formatRupiah(totalBalance);
-
-        // Update persentase berdasarkan perubahan saldo
-        const changeFactor = randomChange / 1000000; // Faktor perubahan
-        tabunganPercentage = Math.max(0, Math.min(100, tabunganPercentage + changeFactor * 0.25));
-        investasiPercentage = Math.max(0, Math.min(100, investasiPercentage + changeFactor * 0.37));
-        donasiPercentage = Math.max(0, Math.min(100, donasiPercentage + changeFactor * 0.31));
-        transaksiPercentage = Math.max(0, Math.min(100, transaksiPercentage + changeFactor * 0.64));
-
-        // Update tampilan persentase
-        updatePercentages();
-
-        // Simpan data ke localStorage
-        saveDataToLocalStorage();
-
-        // Tambahkan aktivitas ke riwayat
-        if (randomChange > 0) {
-            addActivityToHistory(`Saldo bertambah sebesar Rp. ${randomChange.toLocaleString('id-ID')}`);
-            toastr.success(`Saldo bertambah sebesar Rp. ${randomChange.toLocaleString('id-ID')}`, 'Berhasil', { timeOut: 2000 });
-        } else {
-            addActivityToHistory(`Saldo berkurang sebesar Rp. ${Math.abs(randomChange).toLocaleString('id-ID')}`);
-            toastr.error(`Saldo berkurang sebesar Rp. ${Math.abs(randomChange).toLocaleString('id-ID')}`, 'Pengurangan', { timeOut: 2000 });
-        }
     }
 
-    // Fungsi untuk simulasi anggota bergabung dan keluar
-    function simulateMembers() {
-        const randomJoined = Math.floor(Math.random() * 15); // Anggota bergabung acak (0-14)
-        const randomLeft = Math.floor(Math.random() * 3); // Anggota keluar acak (0-2)
+    // Update tabel riwayat
+    updateActivityHistoryTable();
+}
 
-        joinedMembers += randomJoined;
-        leftMembers += randomLeft;
-        currentMembers += randomJoined - randomLeft; // Update jumlah anggota sekarang
+// Fungsi untuk menambahkan aktivitas ke riwayat
+function addActivityToHistory(activity) {
+    const timestamp = new Date().toLocaleString(); // Tambahkan timestamp
+    activityHistory.unshift({ timestamp, activity }); // Tambahkan ke awal array
+    if (activityHistory.length > 10) {
+        activityHistory.pop(); // Hapus aktivitas terlama jika lebih dari 10
+    }
+    saveDataToLocalStorage(); // Simpan ke localStorage
+    updateActivityHistoryTable(); // Update tabel riwayat
+}
 
-        // Update tampilan anggota
-        document.getElementById('joinedMembers').textContent = joinedMembers;
-        document.getElementById('leftMembers').textContent = leftMembers;
-        document.getElementById('currentMembers').textContent = currentMembers.toLocaleString('id-ID');
+// Fungsi untuk mengupdate tabel riwayat
+function updateActivityHistoryTable() {
+    const historyTableBody = document.getElementById('historyTableBody');
+    historyTableBody.innerHTML = ''; // Kosongkan tabel
 
-        // Update saldo berdasarkan anggota bergabung/keluar
-        const memberImpact = (randomJoined - randomLeft) * 100000; // Setiap anggota memengaruhi saldo sebesar Rp. 100.000
-        totalBalance += memberImpact;
+    activityHistory.forEach((entry, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${entry.timestamp}</td>
+            <td>${entry.activity}</td>
+        `;
+        historyTableBody.appendChild(row);
+    });
+}
 
-        // Update tampilan saldo
-        document.getElementById('totalBalance').textContent = formatRupiah(totalBalance);
+// Fungsi untuk menampilkan progress bar dengan teks deskripsi dan persentase
+function showProgressBar(description, percentage) {
+    const progressBarContainer = document.getElementById('progressBarContainer');
+    const progressDescription = document.getElementById('progressDescription');
+    const progressPercentage = document.getElementById('progressPercentage');
+    const progressBar = document.getElementById('progressBar');
 
-        // Simpan data ke localStorage
-        saveDataToLocalStorage();
+    progressDescription.textContent = description;
+    progressPercentage.textContent = `${percentage}%`;
+    progressBarContainer.classList.add('visible'); // Tampilkan progress bar dengan efek fade-in
+    progressBar.style.width = `${percentage}%`; // Mulai animasi progress bar
+}
 
-        // Tambahkan aktivitas ke riwayat
-        if (randomJoined > 0) {
-            addActivityToHistory(`${randomJoined} anggota bergabung!`);
-            toastr.info(`${randomJoined} anggota bergabung!`, 'Info', { timeOut: 2000 });
+// Fungsi untuk menyembunyikan progress bar
+function hideProgressBar() {
+    const progressBarContainer = document.getElementById('progressBarContainer');
+    const progressBar = document.getElementById('progressBar');
+
+    progressBarContainer.classList.remove('visible'); // Sembunyikan progress bar dengan efek fade-out
+    progressBar.style.width = '0'; // Reset progress bar
+}
+
+// Fungsi untuk simulasi proses loading dengan progress bar
+function simulateLoading() {
+    let progress = 0;
+    const interval = setInterval(() => {
+        progress += 10; // Naikkan progress setiap 500ms
+        showProgressBar('Memuat Data...', progress);
+
+        if (progress >= 100) {
+            clearInterval(interval);
+            setTimeout(() => {
+                hideProgressBar();
+                updateChartAndBalance(); // Lanjutkan dengan update chart dan saldo
+            }, 500); // Tunggu 500ms sebelum menyembunyikan progress bar
         }
-        if (randomLeft > 0) {
-            addActivityToHistory(`${randomLeft} anggota keluar!`);
-            toastr.warning(`${randomLeft} anggota keluar!`, 'Peringatan', { timeOut: 2000 });
-        }
+    }, 500); // Update progress setiap 500ms
+}
+
+// Update chart dan saldo dengan progress bar
+function updateChartAndBalanceWithProgress() {
+    simulateLoading();
+}
+
+// Fungsi untuk mengupdate data chart dan saldo
+function updateChartAndBalance() {
+    // Generate data acak baru untuk setiap dataset
+    myChart.data.datasets.forEach(dataset => {
+        dataset.data = Array.from({ length: data.labels.length }, () => Math.floor(Math.random() * 100));
+    });
+
+    // Update chart
+    myChart.update();
+
+    // Simulasi penambahan atau pengurangan saldo secara acak
+    const randomChange = Math.floor(Math.random() * 1000000) * (Math.random() > 0.5 ? 1 : -1); // Acak antara -1.000.000 hingga +1.000.000
+    totalBalance += randomChange;
+
+    // Pastikan saldo tidak melebihi batas maksimal atau minimal
+    if (totalBalance > maxBalance) {
+        totalBalance = maxBalance;
+        toastr.info('Saldo telah mencapai batas maksimal!', 'Info', { timeOut: 2000 });
+    } else if (totalBalance < minBalance) {
+        totalBalance = minBalance;
+        toastr.warning('Saldo telah mencapai batas minimal!', 'Peringatan', { timeOut: 2000 });
     }
 
-    // Fungsi untuk simulasi anggota dengan progress bar
-    function simulateMembersWithProgress() {
-        let progress = 0;
-        const interval = setInterval(() => {
-            progress += 10; // Naikkan progress setiap 500ms
-            showProgressBar('Memproses Data Anggota...', progress);
+    // Update tampilan saldo
+    document.getElementById('totalBalance').textContent = formatRupiah(totalBalance);
+    updateUSDBalance(); // Update saldo dolar AS
 
-            if (progress >= 100) {
-                clearInterval(interval);
-                setTimeout(() => {
-                    hideProgressBar();
-                    simulateMembers(); // Lanjutkan dengan simulasi anggota
-                }, 500); // Tunggu 500ms sebelum menyembunyikan progress bar
-            }
-        }, 500); // Update progress setiap 500ms
-    }
+    // Update persentase berdasarkan perubahan saldo
+    const changeFactor = randomChange / 1000000; // Faktor perubahan
+    tabunganPercentage = Math.max(0, Math.min(100, tabunganPercentage + changeFactor * 0.25));
+    investasiPercentage = Math.max(0, Math.min(100, investasiPercentage + changeFactor * 0.37));
+    donasiPercentage = Math.max(0, Math.min(100, donasiPercentage + changeFactor * 0.31));
+    transaksiPercentage = Math.max(0, Math.min(100, transaksiPercentage + changeFactor * 0.64));
 
-    // Update chart dan saldo dengan progress bar setiap 10 detik
-    setInterval(updateChartAndBalanceWithProgress, 10000);
-
-    // Simulasi anggota dengan progress bar setiap 15 detik
-    setInterval(simulateMembersWithProgress, 15000);
-
-    // Menampilkan tahun dinamis di footer
-    document.getElementById('currentYear').textContent = new Date().getFullYear();
-
-    // Konfigurasi Toastr untuk notifikasi di bawah
-    toastr.options = {
-        positionClass: 'toast-bottom-center', // Posisi notifikasi di bawah tengah
-        timeOut: 2000,
-        closeButton: true,
-        progressBar: true,
-        preventDuplicates: true
-    };
-
-    // Inisialisasi persentase
+    // Update tampilan persentase
     updatePercentages();
 
-    // Handle Withdraw Form Submission
-    document.getElementById('withdrawForm').addEventListener('submit', function (e) {
-        e.preventDefault();
-        const amount = parseFloat(document.getElementById('withdrawAmount').value);
-        const method = document.getElementById('withdrawMethod').value;
-        const otp = document.getElementById('otp').value;
+    // Simpan data ke localStorage
+    saveDataToLocalStorage();
 
-        if (amount > totalBalance) {
-            toastr.error('Jumlah penarikan melebihi saldo!', 'Error', { timeOut: 2000 });
-            return;
+    // Tambahkan aktivitas ke riwayat
+    if (randomChange > 0) {
+        addActivityToHistory(`Saldo bertambah sebesar Rp. ${randomChange.toLocaleString('id-ID')}`);
+        toastr.success(`Saldo bertambah sebesar Rp. ${randomChange.toLocaleString('id-ID')}`, 'Berhasil', { timeOut: 2000 });
+    } else {
+        addActivityToHistory(`Saldo berkurang sebesar Rp. ${Math.abs(randomChange).toLocaleString('id-ID')}`);
+        toastr.error(`Saldo berkurang sebesar Rp. ${Math.abs(randomChange).toLocaleString('id-ID')}`, 'Pengurangan', { timeOut: 2000 });
+    }
+}
+
+// Fungsi untuk simulasi anggota bergabung dan keluar
+function simulateMembers() {
+    const randomJoined = Math.floor(Math.random() * 15); // Anggota bergabung acak (0-14)
+    const randomLeft = Math.floor(Math.random() * 3); // Anggota keluar acak (0-2)
+
+    joinedMembers += randomJoined;
+    leftMembers += randomLeft;
+    currentMembers += randomJoined - randomLeft; // Update jumlah anggota sekarang
+
+    // Update tampilan anggota
+    document.getElementById('joinedMembers').textContent = joinedMembers;
+    document.getElementById('leftMembers').textContent = leftMembers;
+    document.getElementById('currentMembers').textContent = currentMembers.toLocaleString('id-ID');
+
+    // Update saldo berdasarkan anggota bergabung/keluar
+    const memberImpact = (randomJoined - randomLeft) * 100000; // Setiap anggota memengaruhi saldo sebesar Rp. 100.000
+    totalBalance += memberImpact;
+
+    // Update tampilan saldo
+    document.getElementById('totalBalance').textContent = formatRupiah(totalBalance);
+    updateUSDBalance(); // Update saldo dolar AS
+
+    // Simpan data ke localStorage
+    saveDataToLocalStorage();
+
+    // Tambahkan aktivitas ke riwayat
+    if (randomJoined > 0) {
+        addActivityToHistory(`${randomJoined} anggota bergabung!`);
+        toastr.info(`${randomJoined} anggota bergabung!`, 'Info', { timeOut: 2000 });
+    }
+    if (randomLeft > 0) {
+        addActivityToHistory(`${randomLeft} anggota keluar!`);
+        toastr.warning(`${randomLeft} anggota keluar!`, 'Peringatan', { timeOut: 2000 });
+    }
+}
+
+// Fungsi untuk simulasi anggota dengan progress bar
+function simulateMembersWithProgress() {
+    let progress = 0;
+    const interval = setInterval(() => {
+        progress += 10; // Naikkan progress setiap 500ms
+        showProgressBar('Memproses Data Anggota...', progress);
+
+        if (progress >= 100) {
+            clearInterval(interval);
+            setTimeout(() => {
+                hideProgressBar();
+                simulateMembers(); // Lanjutkan dengan simulasi anggota
+            }, 500); // Tunggu 500ms sebelum menyembunyikan progress bar
         }
+    }, 500); // Update progress setiap 500ms
+}
 
-        totalBalance -= amount;
-        document.getElementById('totalBalance').textContent = formatRupiah(totalBalance);
-        toastr.success(`Penarikan sebesar Rp. ${amount.toLocaleString('id-ID')} berhasil!`, 'Berhasil', { timeOut: 2000 });
+// Update chart dan saldo dengan progress bar setiap 10 detik
+setInterval(updateChartAndBalanceWithProgress, 10000);
 
-        // Tambahkan aktivitas ke riwayat
-        addActivityToHistory(`Penarikan sebesar Rp. ${amount.toLocaleString('id-ID')} dilakukan.`);
+// Simulasi anggota dengan progress bar setiap 15 detik
+setInterval(simulateMembersWithProgress, 15000);
 
-        // Simpan data ke localStorage
-        saveDataToLocalStorage();
+// Menampilkan tahun dinamis di footer
+document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-        // Reset form
-        document.getElementById('withdrawForm').reset();
-        $('#withdrawModal').modal('hide');
-    });
+// Konfigurasi Toastr untuk notifikasi di bawah
+toastr.options = {
+    positionClass: 'toast-bottom-center', // Posisi notifikasi di bawah tengah
+    timeOut: 2000,
+    closeButton: true,
+    progressBar: true,
+    preventDuplicates: true
+};
 
-    // Handle Recharge Form Submission
-    document.getElementById('rechargeForm').addEventListener('submit', function (e) {
-        e.preventDefault();
-        const amount = parseFloat(document.getElementById('rechargeAmount').value);
-        const method = document.getElementById('rechargeMethod').value;
-        const email = document.getElementById('emailVerification').value;
+// Inisialisasi persentase
+updatePercentages();
 
-        totalBalance += amount;
-        document.getElementById('totalBalance').textContent = formatRupiah(totalBalance);
-        toastr.success(`Pengisian sebesar Rp. ${amount.toLocaleString('id-ID')} berhasil!`, 'Berhasil', { timeOut: 2000 });
+// Handle Withdraw Form Submission
+document.getElementById('withdrawForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const amount = parseFloat(document.getElementById('withdrawAmount').value);
+    const method = document.getElementById('withdrawMethod').value;
+    const otp = document.getElementById('otp').value;
 
-        // Tambahkan aktivitas ke riwayat
-        addActivityToHistory(`Pengisian sebesar Rp. ${amount.toLocaleString('id-ID')} dilakukan.`);
+    if (amount > totalBalance) {
+        toastr.error('Jumlah penarikan melebihi saldo!', 'Error', { timeOut: 2000 });
+        return;
+    }
 
-        // Simpan data ke localStorage
-        saveDataToLocalStorage();
+    totalBalance -= amount;
+    document.getElementById('totalBalance').textContent = formatRupiah(totalBalance);
+    updateUSDBalance(); // Update saldo dolar AS
+    toastr.success(`Penarikan sebesar Rp. ${amount.toLocaleString('id-ID')} berhasil!`, 'Berhasil', { timeOut: 2000 });
 
-        // Reset form
-        document.getElementById('rechargeForm').reset();
-        $('#rechargeModal').modal('hide');
-    });
+    // Tambahkan aktivitas ke riwayat
+    addActivityToHistory(`Penarikan sebesar Rp. ${amount.toLocaleString('id-ID')} dilakukan.`);
 
-    // Muat data dari localStorage saat halaman dimuat
-    window.onload = function() {
-        loadDataFromLocalStorage();
-    };
+    // Simpan data ke localStorage
+    saveDataToLocalStorage();
+
+    // Reset form
+    document.getElementById('withdrawForm').reset();
+    $('#withdrawModal').modal('hide');
+});
+
+// Handle Recharge Form Submission
+document.getElementById('rechargeForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const amount = parseFloat(document.getElementById('rechargeAmount').value);
+    const method = document.getElementById('rechargeMethod').value;
+    const email = document.getElementById('emailVerification').value;
+
+    totalBalance += amount;
+    document.getElementById('totalBalance').textContent = formatRupiah(totalBalance);
+    updateUSDBalance(); // Update saldo dolar AS
+    toastr.success(`Pengisian sebesar Rp. ${amount.toLocaleString('id-ID')} berhasil!`, 'Berhasil', { timeOut: 2000 });
+
+    // Tambahkan aktivitas ke riwayat
+    addActivityToHistory(`Pengisian sebesar Rp. ${amount.toLocaleString('id-ID')} dilakukan.`);
+
+    // Simpan data ke localStorage
+    saveDataToLocalStorage();
+
+    // Reset form
+    document.getElementById('rechargeForm').reset();
+    $('#rechargeModal').modal('hide');
+});
+
+// Muat data dari localStorage saat halaman dimuat
+window.onload = function() {
+    loadDataFromLocalStorage();
+};
 </script>
 </body>
 </html>
