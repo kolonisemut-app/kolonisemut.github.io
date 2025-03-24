@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Data</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .reset-container {
+            text-align: center;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .reset-container h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        .reset-container button {
+            font-size: 1.2rem;
+            padding: 10px 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="reset-container">
+        <h1>Reset Data ke Setelan Awal</h1>
+        <p>Tekan tombol di bawah ini untuk mengembalikan semua data ke setelan awal.</p>
+        <button id="resetButton" class="btn btn-danger">Reset Data</button>
+    </div>
+
+    <script>
+        // Fungsi untuk mereset data
+        function resetData() {
+            // Hapus semua data di localStorage
+            localStorage.clear();
+
+            // Redirect kembali ke halaman utama setelah reset
+            window.location.href = 'dashboard.html';
+        }
+
+        // Tambahkan event listener ke tombol reset
+        document.getElementById('resetButton').addEventListener('click', resetData);
+    </script>
+</body>
+</html>

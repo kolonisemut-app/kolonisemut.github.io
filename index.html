@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koloni Semut Apps — Loading</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!-- Google Font: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #007bff; /* Warna latar belakang biru */
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+        .loading-container {
+            max-width: 400px;
+            width: 100%;
+            padding: 20px;
+        }
+        .loading-spinner {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            animation: spin 2s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .progress {
+            height: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            background-color: rgba(255, 255, 255, 0.3); /* Warna latar progress bar */
+        }
+        .progress-bar {
+            background-color: #ffc107; /* Warna progress bar (hijau) */
+            transition: width 0.3s ease-in-out; /* Animasi halus untuk progress bar */
+        }
+        .loading-text {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        .loading-description {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-container">
+        <!-- Spinner -->
+        <div class="loading-spinner">
+            <i class="fas fa-sync-alt"></i> <!-- Ikon spinner -->
+        </div>
+
+        <!-- Teks Loading -->
+        <div class="loading-text">
+            Memuat Aplikasi...
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress">
+            <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%;"></div>
+        </div>
+
+        <!-- Persentase -->
+        <div id="percentage" class="loading-text">
+            0%
+        </div>
+
+        <!-- Deskripsi -->
+        <div class="loading-description">
+            Harap tunggu sebentar, kami sedang menyiapkan aplikasi untuk Anda.
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            let progress = 0;
+            const progressBar = $("#progressBar");
+            const percentage = $("#percentage");
+
+            // Fungsi untuk mengupdate progress bar dengan logika yang lebih realistis
+            const updateProgress = () => {
+                if (progress < 100) {
+                    // Simulasi fase loading
+                    if (progress < 40) {
+                        // Fase 1: Cepat (0% - 40%)
+                        progress += Math.random() * 5; // Increment acak antara 0-5%
+                    } else if (progress < 80) {
+                        // Fase 2: Sedang (40% - 80%)
+                        progress += Math.random() * 3; // Increment acak antara 0-3%
+                    } else {
+                        // Fase 3: Lambat (80% - 100%)
+                        progress += Math.random() * 1; // Increment acak antara 0-1%
+                    }
+
+                    // Pastikan progress tidak melebihi 100%
+                    if (progress > 100) progress = 100;
+
+                    // Update progress bar dan persentase
+                    progressBar.css("width", progress + "%");
+                    percentage.text(progress.toFixed(0) + "%");
+
+                    // Update teks deskriptif berdasarkan progress
+                    if (progress < 40) {
+                        $(".loading-description").text("Memuat data...");
+                    } else if (progress < 80) {
+                        $(".loading-description").text("Memproses data...");
+                    } else {
+                        $(".loading-description").text("Menyelesaikan proses...");
+                    }
+
+                    // Update progress bar setiap 100ms
+                    setTimeout(updateProgress, 100);
+                } else {
+                    // Redirect ke halaman utama setelah loading selesai
+                    window.location.href = "dashboard.html";
+                }
+            };
+
+            // Mulai proses loading
+            updateProgress();
+        });
+    </script>
+</body>
+</html>
